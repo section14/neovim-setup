@@ -59,7 +59,7 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> H  <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> F  <cmd>:Format<CR>
 
 syntax on
@@ -128,8 +128,12 @@ highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
 " nmap <C-P> :FZF<CR>
 
 " fix first one
-nmap fj zz <C-E> <C-E> <C-E> <C-E> <C-E> <C-E> <C-E> <C-E> <C-E> <C-E> <C-E> <C-E>
+nmap fj zt 10<C-y>
 nmap <F2> :NERDTree<CR>
+
+" shortcut for jumping 4 spaces up or down
+nmap J 4j
+nmap K 4k
 
 " show cutoff errors in it's own window
 nnoremap <silent> sh <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
