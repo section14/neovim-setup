@@ -26,6 +26,9 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'gregsexton/matchtag'
 
+" .editorconfig plugin
+Plug 'editorconfig/editorconfig-vim'
+
 " indent plugin
 Plug 'windwp/nvim-autopairs'
 
