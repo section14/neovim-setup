@@ -88,6 +88,10 @@ au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set shiftwi
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set softtabstop=2
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set expandtab
 
+" JS abbreviations
+au FileType js,javascript,vue,ts,typescript,typescriptreact
+	\ :iabbrev <buffer> ccc console.log("")<Left><Left><C-R>=Eatchar('\s')<CR>
+
 " PHP
 au FileType php set tabstop=4
 au FileType php set shiftwidth=4
@@ -154,3 +158,9 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 :luafile ~/.config/nvim/lua/treesitter.lua
 :luafile ~/.config/nvim/lua/compe-config.lua
 :luafile ~/.config/nvim/lua/colors.lua
+
+" Functions
+func Eatchar(pat)
+   let c = nr2char(getchar(0))
+   return (c =~ a:pat) ? '' : c
+endfunc
