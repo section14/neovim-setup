@@ -62,7 +62,7 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> H  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> D  <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> F  <cmd>:Format<CR>
 
 syntax on
