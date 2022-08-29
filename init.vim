@@ -131,7 +131,7 @@ highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
 " nmap <C-P> :FZF<CR>
 
 " fix first one
-nmap fj zt 10<C-y>
+nmap zj zt 10<C-y>
 nmap <F2> :NERDTree<CR>
 
 " shortcut for jumping 4 spaces up or down
