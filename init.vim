@@ -92,6 +92,9 @@ au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set expandt
 au FileType js,javascript,vue,ts,typescript,typescriptreact
 	\ :iabbrev <buffer> ccc console.log("")<Left><Left><C-R>=Eatchar('\s')<CR>
 
+" useEffect shortcut for react
+au FileType js,javascript,vue,ts,typescript,typescriptreact
+	\ :iabbrev <buffer> uuee useEffect(() => {}, [])<Left><Left><C-R>=Eatchar('\s')<CR>
 " PHP
 au FileType php set tabstop=4
 au FileType php set shiftwidth=4
@@ -161,6 +164,10 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 " Functions
 func Eatchar(pat)
-   let c = nr2char(getchar(0))
-   return (c =~ a:pat) ? '' : c
+	let c = nr2char(getchar(0))
+	return (c =~ a:pat) ? '' : c
+endfunc
+
+func Stupid()
+	return "() => {<CR>z<CR>}<Esc>?z<CR>xi"
 endfunc
