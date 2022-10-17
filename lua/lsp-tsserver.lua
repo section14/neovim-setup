@@ -4,8 +4,8 @@ local fmt = require('formatter')
 lsp.tsserver.setup{
     on_attach = function(client, bufnr)
 
-		-- thignh
-		client.resolved_capabilities.document_formatting = false
+		-- this does something
+		client.server_capabilities.documentFormattingProvider = false
     end
 }
 

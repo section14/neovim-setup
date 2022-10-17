@@ -151,6 +151,9 @@ nnoremap <silent> sh <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 " I forget what this does
 autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
+" temp fix for treesitter highlighting 
+:luafile ~/.config/nvim/lua/treefix.lua
+
 :luafile ~/.config/nvim/lua/lsp-golang.lua
 :luafile ~/.config/nvim/lua/lsp-tsserver.lua
 :luafile ~/.config/nvim/lua/lsp-vue.lua
@@ -166,8 +169,4 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 func Eatchar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
-endfunc
-
-func Stupid()
-	return "() => {<CR>z<CR>}<Esc>?z<CR>xi"
 endfunc
