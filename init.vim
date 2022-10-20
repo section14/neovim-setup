@@ -141,6 +141,10 @@ highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
 nmap zj zt 10<C-y>
 nmap <F2> :NERDTree<CR>
 
+" make nerdree add node menu one line 
+" there's a bug where it won't collapse
+let g:NERDTreeMinimalMenu=1
+
 " shortcut for jumping 4 spaces up or down
 nmap J 4j
 nmap K 4k
