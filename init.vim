@@ -150,7 +150,7 @@ nmap J 4j
 nmap K 4k
 
 " show cutoff errors in it's own window
-nnoremap <silent> sh <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <silent> sh <cmd>lua vim.diagnostic.open_float({scope="line"})<CR>
 
 " I forget what this does
 autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
