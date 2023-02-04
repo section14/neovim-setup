@@ -80,7 +80,7 @@ au FileType go set tabstop=4
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set expandtab
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+au FileType go nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
 
 " Javascript / html / css
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set tabstop=2
@@ -95,6 +95,7 @@ au FileType js,javascript,vue,ts,typescript,typescriptreact
 " useEffect shortcut for react
 au FileType js,javascript,vue,ts,typescript,typescriptreact
 	\ :iabbrev <buffer> uuee useEffect(() => {}, [])<Left><Left><C-R>=Eatchar('\s')<CR>
+
 " PHP
 au FileType php set tabstop=4
 au FileType php set shiftwidth=4
