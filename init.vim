@@ -45,7 +45,7 @@ Plug 'Th3Whit3Wolf/onebuddy'
 " Initialize plugins
 call plug#end()
 
-" telescope config
+" shortcuts to show various Telescope screens
 nnoremap <silent>ff <cmd>Telescope find_files<CR>
 nnoremap <silent>fg <cmd>Telescope live_grep<CR>
 nnoremap <silent>fb <cmd>Telescope buffers<CR>
@@ -157,18 +157,19 @@ nnoremap <silent> sh <cmd>lua vim.diagnostic.open_float({scope="line"})<CR>
 autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 " temp fix for treesitter highlighting 
-:luafile ~/.config/nvim/lua/treefix.lua
+:luafile ~/.config/nvim/lua/_treefix.lua
 
-:luafile ~/.config/nvim/lua/lsp-golang.lua
-:luafile ~/.config/nvim/lua/lsp-tsserver.lua
-:luafile ~/.config/nvim/lua/lsp-vue.lua
-:luafile ~/.config/nvim/lua/lsp-cpp.lua
-:luafile ~/.config/nvim/lua/lsp-php.lua
-:luafile ~/.config/nvim/lua/util.lua
-" :luafile ~/.config/nvim/lua/galaxyline/space.lua
-:luafile ~/.config/nvim/lua/treesitter.lua
-:luafile ~/.config/nvim/lua/compe-config.lua
-:luafile ~/.config/nvim/lua/colors.lua
+:luafile ~/.config/nvim/lua/_lsp-golang.lua
+:luafile ~/.config/nvim/lua/_lsp-tsserver.lua
+:luafile ~/.config/nvim/lua/_lsp-vue.lua
+:luafile ~/.config/nvim/lua/_lsp-cpp.lua
+:luafile ~/.config/nvim/lua/_lsp-php.lua
+:luafile ~/.config/nvim/lua/_util.lua
+" :luafile ~/.config/nvim/lua/galaxyline/_space.lua
+:luafile ~/.config/nvim/lua/_treesitter.lua
+:luafile ~/.config/nvim/lua/_telescope.lua
+:luafile ~/.config/nvim/lua/_compe-config.lua
+:luafile ~/.config/nvim/lua/_colors.lua
 
 " Functions
 func Eatchar(pat)
