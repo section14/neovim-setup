@@ -1,7 +1,7 @@
 " Config vim-plug
 call plug#begin('~/.local/share/nvim/site/autoload')
 
-" Neovim 0.5 stuff, clean up later
+" Neovim 0.5+ stuff, clean up later
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'neovim/nvim-lspconfig'
@@ -161,6 +161,7 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 :luafile ~/.config/nvim/lua/_lsp-golang.lua
 :luafile ~/.config/nvim/lua/_lsp-tsserver.lua
+:luafile ~/.config/nvim/lua/_lsp-html-css.lua
 :luafile ~/.config/nvim/lua/_lsp-vue.lua
 :luafile ~/.config/nvim/lua/_lsp-cpp.lua
 :luafile ~/.config/nvim/lua/_lsp-php.lua
