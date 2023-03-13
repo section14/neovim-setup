@@ -23,6 +23,9 @@ to make the whole thing work. CMAKE will generate one if you put the following
 ### HTML/CSS
 `yarn global add vscode-langservers-extracted`
 
+### PHP
+Add `phpactor`. Relevant docs: https://phpactor.readthedocs.io/en/master/usage/language-server.html
+
 ### Treesitter
 Treesitter makes the syntax highlighting work better. Most installs are a single command.
 
