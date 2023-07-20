@@ -21,7 +21,9 @@ Plug 'mhartington/formatter.nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
-" Plug 'kyazdani42/nvim-web-devicons'
+
+" nvim tree
+Plug 'nvim-tree/nvim-tree.lua'
 
 Plug 'scrooloose/nerdtree'
 Plug 'gregsexton/matchtag'
@@ -42,8 +44,15 @@ Plug 'joshdick/onedark.vim'
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'Th3Whit3Wolf/onebuddy'
 
+" dev icons
+Plug 'nvim-tree/nvim-web-devicons'
+
 " Initialize plugins
 call plug#end()
+
+" nvim tree config
+lua vim.g.loaded_netrw = 1
+lua vim.g.loaded_netrwPlugin = 1
 
 " shortcuts to show various Telescope screens
 nnoremap <silent>ff <cmd>Telescope find_files<CR>
@@ -89,8 +98,14 @@ au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set softtab
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set expandtab
 
 " JS abbreviations
+
+" console.log()
 au FileType js,javascript,vue,ts,typescript,typescriptreact
 	\ :iabbrev <buffer> ccc console.log("")<Left><Left><C-R>=Eatchar('\s')<CR>
+
+" console.trace()
+au FileType js,javascript,vue,ts,typescript,typescriptreact
+	\ :iabbrev <buffer> cct console.trace()<C-R>=Eatchar('\s')<CR>
 
 " useEffect shortcut for react
 au FileType js,javascript,vue,ts,typescript,typescriptreact
@@ -141,6 +156,7 @@ highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
 " fix first one
 nmap zj zt 10<C-y>
 nmap <F2> :NERDTree<CR>
+" nmap <F2> :NvimTreeToggle<CR>
 
 " make nerdree add node menu one line 
 " there's a bug where it won't collapse
@@ -158,19 +174,25 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 " temp fix for treesitter highlighting 
 :luafile ~/.config/nvim/lua/_treefix.lua
+:luafile ~/.config/nvim/lua/_nvimtree.lua
 
+" LSP
 :luafile ~/.config/nvim/lua/_lsp-golang.lua
 :luafile ~/.config/nvim/lua/_lsp-tsserver.lua
 :luafile ~/.config/nvim/lua/_lsp-html-css.lua
 :luafile ~/.config/nvim/lua/_lsp-vue.lua
 :luafile ~/.config/nvim/lua/_lsp-cpp.lua
 :luafile ~/.config/nvim/lua/_lsp-php.lua
+
 :luafile ~/.config/nvim/lua/_util.lua
 " :luafile ~/.config/nvim/lua/galaxyline/_space.lua
 :luafile ~/.config/nvim/lua/_treesitter.lua
 :luafile ~/.config/nvim/lua/_telescope.lua
 :luafile ~/.config/nvim/lua/_compe-config.lua
+
+" Look and feel
 :luafile ~/.config/nvim/lua/_colors.lua
+:luafile ~/.config/nvim/lua/_dev-icons.lua
 
 " Functions
 func Eatchar(pat)
