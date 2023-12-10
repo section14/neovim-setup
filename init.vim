@@ -82,7 +82,7 @@ filetype indent plugin on
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set noexpandtab
+set expandtab
 
 " Go
 au FileType go set tabstop=4
@@ -92,9 +92,9 @@ au FileType go set expandtab
 au FileType go nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
 
 " Javascript / html / css
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set tabstop=2
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set shiftwidth=2
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set softtabstop=2
+au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set tabstop=4
+au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set shiftwidth=4
+au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set softtabstop=4
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set expandtab
 
 " JS abbreviations
@@ -128,6 +128,12 @@ au FileType yml,yaml set tabstop=2
 au FileType yml,yaml set shiftwidth=2
 au FileType yml,yaml set softtabstop=2
 au FileType yml,yaml set expandtab
+
+" JSON
+au FileType json set tabstop=4
+au FileType json set shiftwidth=4
+au FileType json set softtabstop=4
+au FileType json set expandtab
 
 " misc
 set number relativenumber
