@@ -33,7 +33,7 @@ Treesitter makes the syntax highlighting work better. Most installs are a single
 - typescript
 - php
 - go
-- clangd (C++)
+- cpp (C++)
 - html
 - css
 
