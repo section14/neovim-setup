@@ -50,46 +50,83 @@ Plug 'nvim-tree/nvim-web-devicons'
 
 " Initialize plugins
 call plug#end()
+]])
 
-" nvim tree config
-lua vim.g.loaded_netrw = 1
-lua vim.g.loaded_netrwPlugin = 1
+-- nvim tree config
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- shortcuts to telescope commands
+vim.keymap.set('n', 'ff', [[<cmd>Telescope find_files<CR>]], { noremap = true, silent = true })
+vim.keymap.set('n', 'fg', [[<cmd>Telescope live_grep<CR>]], { noremap = true, silent = true })
+vim.keymap.set('n', 'fb', [[<cmd>Telescope buffers<CR>]], { noremap = true, silent = true })
+vim.keymap.set('n', 'fh', [[<cmd>Telescope help_tags<CR>]], { noremap = true, silent = true })
+vim.keymap.set('n', 'fr', [[<cmd>Telescope resume<CR>]], { noremap = true, silent = true })
+
+-- compe config
+vim.keymap.set('i', '<C-Space>', [[compe#complete()]], { noremap = true, silent = true, expr = true })
+vim.keymap.set('i', '<C-e>', [[compe#close(\'<C-e>\')]], { noremap = true, silent = true, expr = true })
+vim.keymap.set('i', '<C-f>', [[compe#scroll(\'delta\': +4)]], { noremap = true, silent = true, expr = true })
+vim.keymap.set('i', '<C-d>', [[compe#scroll(\'delta\': -4)]], { noremap = true, silent = true, expr = true })
+
+-- format, go-to definition, hover over description / errors
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+vim.keymap.set('n', 'D', vim.lsp.buf.hover, { noremap = true, silent = true })
+vim.keymap.set('n', 'F', [[<cmd>:Format<CR>]], { noremap = true, silent = true })
+
+-- I don't think you need these anymore
+-- syntax on
+-- filetype indent plugin on
+
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {'*.h', '*.c', '*.cpp'},
+  callback = function(ev)
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4 
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.expandtab = true
+  end
+})
+
+vim.cmd([[
 
 " shortcuts to show various Telescope screens
-nnoremap <silent>ff <cmd>Telescope find_files<CR>
-nnoremap <silent>fg <cmd>Telescope live_grep<CR>
-nnoremap <silent>fb <cmd>Telescope buffers<CR>
-nnoremap <silent>fh <cmd>Telescope help_tags<CR>
-nnoremap <silent>fr <cmd>Telescope resume<CR>
+" nnoremap <silent>ff <cmd>Telescope find_files<CR>
+" nnoremap <silent>fg <cmd>Telescope live_grep<CR>
+" nnoremap <silent>fb <cmd>Telescope buffers<CR>
+" nnoremap <silent>fh <cmd>Telescope help_tags<CR>
+" nnoremap <silent>fr <cmd>Telescope resume<CR>
 
 " compe config
-" let g:lexima_no_default_rules = v:true
-" call lexima#set_default_rules()
-inoremap <silent><expr> <C-Space> compe#complete()
-" inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+"" let g:lexima_no_default_rules = v:true
+"" call lexima#set_default_rules()
+" inoremap <silent><expr> <C-Space> compe#complete()
+"" inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
+" inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+" inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+" inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> D  <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> F  <cmd>:Format<CR>
+" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> D  <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> F  <cmd>:Format<CR>
 
-syntax on
-
-filetype indent plugin on
 
 " tabs
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
+" set tabstop=4
+" set shiftwidth=4
+" set softtabstop=4
+" set expandtab
 
 " C, C++
-au FileType c,cpp,h set tabstop=4
-au FileType c,cpp,h set shiftwidth=4
-au FileType c,cpp,h set softtabstop=4
-au FileType c,cpp,h set expandtab
+" au FileType c,cpp,h set tabstop=4
+" au FileType c,cpp,h set shiftwidth=4
+" au FileType c,cpp,h set softtabstop=4
+" au FileType c,cpp,h set expandtab
 
 " Go
 au FileType go set tabstop=4
@@ -191,7 +228,6 @@ func Eatchar(pat)
 	return (c =~ a:pat) ? '' : c
 endfunc
 ]])
-
 
 -- temp fix for treesitter highlighting 
 require('_treefix')
