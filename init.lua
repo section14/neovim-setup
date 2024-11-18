@@ -47,14 +47,15 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'windwp/nvim-autopairs'
 
 " autotags plugin
-" Plug 'windwp/nvim-ts-autotag'
+Plug 'windwp/nvim-ts-autotag'
 
 " themes
-Plug 'rakr/vim-one'
-Plug 'tomasiser/vim-code-dark'
-Plug 'joshdick/onedark.vim'
+" Plug 'rakr/vim-one'
+" Plug 'tomasiser/vim-code-dark'
+" Plug 'joshdick/onedark.vim'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'Th3Whit3Wolf/onebuddy'
+Plug 'navarasu/onedark.nvim'
 
 " dev icons
 Plug 'nvim-tree/nvim-web-devicons'
@@ -104,7 +105,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
-vim.cmd.colorscheme("colorbuddy")
+vim.cmd.colorscheme("onedark")
 
 vim.cmd([[
 
@@ -242,23 +243,24 @@ func Eatchar(pat)
 endfunc
 ]])
 
+-- Order matters (or does it?)
+
 -- temp fix for treesitter highlighting 
 -- require('_treefix')
 require('_nvimtree')
-
--- LSP
-require('_lsp-golang')
-require('_lsp-tsserver')
-require('_lsp-html-css')
-require('_lsp-vue')
-require('_lsp-cpp')
-require('_lsp-php')
 
 require('_util')
 -- require('galaxyline/_space')
 require('_treesitter')
 require('_telescope')
 require('_compe-config')
+
+-- LSP
+require('_lsp-golang')
+require('_lsp-tsserver')
+require('_lsp-html-css')
+require('_lsp-cpp')
+-- require('_lsp-php')
 
 -- Look and feel
 require('_colors')
