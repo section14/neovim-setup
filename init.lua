@@ -3,10 +3,21 @@ vim.cmd([[
 call plug#begin('~/.local/share/nvim/site/autoload')
 
 " Neovim 0.5+ stuff, clean up later
+" Plug 'nvim-treesitter/nvim-treesitter', {'tag': '0.9.1', 'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+" Plug 'hrsh7th/nvim-compe'
+
+" auto-complete
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 " dependencies
 Plug 'nvim-lua/popup.nvim'
@@ -36,13 +47,13 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'windwp/nvim-autopairs'
 
 " autotags plugin
-Plug 'windwp/nvim-ts-autotag'
+" Plug 'windwp/nvim-ts-autotag'
 
 " themes
 Plug 'rakr/vim-one'
 Plug 'tomasiser/vim-code-dark'
 Plug 'joshdick/onedark.vim'
-Plug 'tjdevries/colorbuddy.vim'
+Plug 'tjdevries/colorbuddy.nvim'
 Plug 'Th3Whit3Wolf/onebuddy'
 
 " dev icons
@@ -64,10 +75,10 @@ vim.keymap.set('n', 'fh', [[<cmd>Telescope help_tags<CR>]], { noremap = true, si
 vim.keymap.set('n', 'fr', [[<cmd>Telescope resume<CR>]], { noremap = true, silent = true })
 
 -- compe config
-vim.keymap.set('i', '<C-Space>', [[compe#complete()]], { noremap = true, silent = true, expr = true })
-vim.keymap.set('i', '<C-e>', [[compe#close(\'<C-e>\')]], { noremap = true, silent = true, expr = true })
-vim.keymap.set('i', '<C-f>', [[compe#scroll(\'delta\': +4)]], { noremap = true, silent = true, expr = true })
-vim.keymap.set('i', '<C-d>', [[compe#scroll(\'delta\': -4)]], { noremap = true, silent = true, expr = true })
+-- vim.keymap.set('i', '<C-Space>', [[compe#complete()]], { noremap = true, silent = true, expr = true })
+-- vim.keymap.set('i', '<C-e>', [[compe#close(\'<C-e>\')]], { noremap = true, silent = true, expr = true })
+-- vim.keymap.set('i', '<C-f>', [[compe#scroll(\'delta\': +4)]], { noremap = true, silent = true, expr = true })
+-- vim.keymap.set('i', '<C-d>', [[compe#scroll(\'delta\': -4)]], { noremap = true, silent = true, expr = true })
 
 -- format, go-to definition, hover over description / errors
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
@@ -92,6 +103,8 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.expandtab = true
   end
 })
+
+vim.cmd.colorscheme("colorbuddy")
 
 vim.cmd([[
 
@@ -230,7 +243,7 @@ endfunc
 ]])
 
 -- temp fix for treesitter highlighting 
-require('_treefix')
+-- require('_treefix')
 require('_nvimtree')
 
 -- LSP
