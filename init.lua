@@ -30,9 +30,11 @@ Plug 'mhartington/formatter.nvim'
 
 "end Neovim 0.5 stuff
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" status bar line
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 " Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+Plug 'nvim-lualine/lualine.nvim'
 
 " nvim tree
 Plug 'nvim-tree/nvim-tree.lua'
@@ -53,6 +55,8 @@ Plug 'windwp/nvim-ts-autotag'
 " Plug 'rakr/vim-one'
 " Plug 'tomasiser/vim-code-dark'
 " Plug 'joshdick/onedark.vim'
+Plug 'folke/tokyonight.nvim'
+Plug 'marko-cerovac/material.nvim'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'Th3Whit3Wolf/onebuddy'
 Plug 'navarasu/onedark.nvim'
@@ -62,11 +66,15 @@ Plug 'nvim-tree/nvim-web-devicons'
 
 " Initialize plugins
 call plug#end()
+
+let g:NERDTreeStatusline = -1
 ]])
 
 -- nvim tree config
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+-- NERDTree config
 
 -- shortcuts to telescope commands
 vim.keymap.set('n', 'ff', [[<cmd>Telescope find_files<CR>]], { noremap = true, silent = true })
@@ -104,8 +112,6 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.expandtab = true
   end
 })
-
-vim.cmd.colorscheme("onedark")
 
 vim.cmd([[
 
@@ -205,7 +211,7 @@ set laststatus=2
 set t_Co=256
 set t_ut=
 " colorscheme onedark
-let g:airline_theme='deus'
+" let g:airline_theme='deus'
 highlight DiagnosticError ctermfg=1 guibg=#403037 guifg=#e06c75
 highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
 
@@ -244,6 +250,7 @@ endfunc
 ]])
 
 -- Order matters (or does it?)
+-- vim.g.material_style = "darker"
 
 -- temp fix for treesitter highlighting 
 -- require('_treefix')
@@ -254,6 +261,7 @@ require('_util')
 require('_treesitter')
 require('_telescope')
 require('_compe-config')
+require('_lualine')
 
 -- LSP
 require('_lsp-golang')
@@ -266,4 +274,4 @@ require('_lsp-cpp')
 require('_colors')
 require('_dev-icons')
 
-
+vim.cmd.colorscheme("onedark")
