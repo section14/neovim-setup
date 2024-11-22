@@ -268,7 +268,7 @@ require('_lsp-golang')
 require('_lsp-tsserver')
 require('_lsp-html-css')
 require('_lsp-cpp')
--- require('_lsp-php')
+require('_lsp-php')
 
 -- Look and feel
 require('_colors')
