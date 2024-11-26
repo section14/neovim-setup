@@ -29,6 +29,59 @@ require("nvim-autopairs.completion.compe").setup({
 ]]--
 
 -- this is diagnostics stuff
+--[[
+vim.diagnostic.config({
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+        },
+        linehl = {
+            [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+            [vim.diagnostic.severity.WARN] = 'WarningMsg',
+        },
+        numhl = {
+            [vim.diagnostic.severity.ERROR] = false,
+            [vim.diagnostic.severity.WARN] = false,
+        },
+    },
+})
+]]--
+
+--[[
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+]]--
+
+for _, diag in ipairs({ "Error", "Warn", "Info", "Hint" }) do
+    vim.fn.sign_define("DiagnosticSign" .. diag, {
+        text = "",
+        texthl = "DiagnosticSign" .. diag,
+        linehl = "",
+        numhl = "DiagnosticSign" .. diag,
+    })
+end
+
+-- vim.diagnostic.config({
+  -- prefix = ">>"
+-- })
+
+--[[
+vim.diagnostic.config({
+
+  --local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  end
+
+})
+  ]]--
+
+--[[
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = {
@@ -39,3 +92,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
   }
 )
+--]]
