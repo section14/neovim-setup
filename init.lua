@@ -215,8 +215,6 @@ set t_Co=256
 set t_ut=
 " colorscheme onedark
 " let g:airline_theme='deus'
-highlight DiagnosticError ctermfg=1 guibg=#403037 guifg=#e06c75
-highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
 
 " highlight line
 " hi CursorLineNr guifg=#333333
@@ -278,3 +276,12 @@ require('_colors')
 require('_dev-icons')
 
 vim.cmd.colorscheme("onedark")
+
+vim.cmd([[
+
+highlight DiagnosticError ctermfg=1 guibg=#403037 guifg=#e06c75
+highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
+
+highlight MatchWord ctermfg=yellow guifg=#60D5EF guibg=#2A3942 cterm=underline gui=underline
+highlight MatchParen ctermfg=yellow guifg=#F5945C guibg=#343032
+]])
