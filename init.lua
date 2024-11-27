@@ -51,6 +51,9 @@ Plug 'windwp/nvim-autopairs'
 " autotags plugin
 Plug 'windwp/nvim-ts-autotag'
 
+" match tags plugin
+Plug 'andymass/vim-matchup'
+
 " themes
 " Plug 'rakr/vim-one'
 " Plug 'tomasiser/vim-code-dark'
