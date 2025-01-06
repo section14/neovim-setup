@@ -4,6 +4,9 @@ require('telescope').setup{
       i = {
         ["<C-S-d>"] = require('telescope.actions').delete_buffer
       }
+    },
+    file_ignore_patterns = {
+      "%.lock"
     }
   }
 }
