@@ -1,11 +1,12 @@
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+local lsp = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require'lspconfig'.html.setup {
+lsp.html.setup {
   capabilities = capabilities,
   init_options = {
-    configurationSection = { "html", "css", "javascript" },
+    configurationSection = { "html", "templ", "css", "javascript" },
     embeddedLanguages = {
       css = false,
       javascript = false
@@ -14,6 +15,6 @@ require'lspconfig'.html.setup {
   }
 }
 
-require'lspconfig'.cssls.setup {
+lsp.cssls.setup {
   capabilities = capabilities,
 }

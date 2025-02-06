@@ -6,8 +6,11 @@ call plug#begin('~/.local/share/nvim/site/autoload')
 " Plug 'nvim-treesitter/nvim-treesitter', {'tag': '0.9.1', 'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+
+" LSP
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-" Plug 'hrsh7th/nvim-compe'
 
 " auto-complete
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -116,6 +119,9 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+-- add templ language
+vim.filetype.add({ extension = {templ = "templ"} })
+
 vim.cmd([[
 
 " shortcuts to show various Telescope screens
@@ -157,6 +163,9 @@ au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set expandtab
 au FileType go nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
+
+" Templ
+au FileType templ nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
 
 " Javascript / html / css
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set tabstop=4
@@ -265,9 +274,13 @@ require('_compe-config')
 require('_lualine')
 
 -- LSP
+require('_lsp-mason') -- must come first!
 require('_lsp-golang')
+require('_lsp-templ')
 require('_lsp-tsserver')
 require('_lsp-html-css')
+require('_lsp-htmx')
+require('_lsp-tailwind')
 require('_lsp-cpp')
 require('_lsp-php')
 
