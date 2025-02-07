@@ -58,7 +58,6 @@ fmt.setup({
 				}
 			end
     },
-
 		html = {
 			-- prettierd
 			function()
@@ -69,7 +68,6 @@ fmt.setup({
 				}
 			end
     },
-		
 		css = {
 			-- prettierd
 			function()

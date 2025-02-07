@@ -165,7 +165,7 @@ au FileType go set expandtab
 au FileType go nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
 
 " Templ
-au FileType templ nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
+" au FileType templ nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
 
 " Javascript / html / css
 au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set tabstop=4
