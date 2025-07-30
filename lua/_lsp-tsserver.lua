@@ -13,6 +13,7 @@ lsp.ts_ls.setup{
 
 fmt.setup({
 	logging = true,
+  log_level = vim.log.levels.DEBUG,
 	filetype = {
 		javascript = {
 			-- prettierd

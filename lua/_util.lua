@@ -21,6 +21,24 @@ require('nvim-ts-autotag').setup({
   -- }
 })
 
+local highlight = {
+  "CursorColumn",
+  "Whitespace",
+}
+
+local icons = require("utils.icons")
+local hooks = require("ibl.hooks")
+
+hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+
+require('ibl').setup({
+  indent = { char = icons.ui.LineMiddle },
+  whitespace = {
+    remove_blankline_trail = false,
+  },
+  scope = { enabled = true, show_exact_scope = true },
+})
+
 --[[
 require("nvim-autopairs.completion.compe").setup({
   map_cr = true, --  map <CR> on insert mode

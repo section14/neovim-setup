@@ -25,6 +25,7 @@ Plug 'hrsh7th/vim-vsnip-integ'
 " dependencies
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+
 " telescope
 Plug 'nvim-telescope/telescope.nvim'
 
@@ -38,6 +39,9 @@ Plug 'mhartington/formatter.nvim'
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 Plug 'nvim-lualine/lualine.nvim'
+
+" indent lines plugin
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " nvim tree
 Plug 'nvim-tree/nvim-tree.lua'
