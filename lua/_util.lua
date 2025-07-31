@@ -36,7 +36,7 @@ require('ibl').setup({
   whitespace = {
     remove_blankline_trail = false,
   },
-  scope = { enabled = true, show_exact_scope = true },
+  scope = { enabled = true, show_exact_scope = true, show_start = false, show_end = false },
 })
 
 --[[
