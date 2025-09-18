@@ -16,4 +16,11 @@ lsp.html.setup {
 
 lsp.cssls.setup {
   capabilities = capabilities,
+  settings = {
+    css = { validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    }
+  }
 }
