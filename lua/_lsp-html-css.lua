@@ -5,10 +5,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lsp.html.setup {
   capabilities = capabilities,
   init_options = {
-    configurationSection = { "html", "templ", "css", "javascript" },
+    configurationSection = { "html", "css", "javascript" },
     embeddedLanguages = {
-      css = false,
-      javascript = false
+      css = true,
+      javascript = true
     },
     provideFormatter = true
   }

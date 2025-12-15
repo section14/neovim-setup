@@ -11,6 +11,7 @@ Plug 'nvim-treesitter/playground'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
+" Plug 'cuducos/yaml.nvim'
 
 " auto-complete
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -50,7 +51,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'gregsexton/matchtag'
 
 " .editorconfig plugin
-Plug 'editorconfig/editorconfig-vim'
+" Plug 'editorconfig/editorconfig-vim'
 
 " indent plugin
 Plug 'windwp/nvim-autopairs'
@@ -209,6 +210,9 @@ au FileType yml,yaml set shiftwidth=2
 au FileType yml,yaml set softtabstop=2
 au FileType yml,yaml set expandtab
 
+" Fix autoindent for YAML - DO NOT indent a line when commenting a line
+autocmd BufNewFile,BufReadPost *.yaml :set indentkeys-=0#
+
 " JSON
 au FileType json set tabstop=4
 au FileType json set shiftwidth=4
@@ -287,6 +291,7 @@ require('_lsp-htmx')
 require('_lsp-tailwind')
 require('_lsp-cpp')
 require('_lsp-php')
+-- require('_lsp-yaml')
 
 -- Look and feel
 require('_colors')

@@ -6,7 +6,8 @@ require'nvim-treesitter.configs'.setup{
     "tsx", 
   },
   indent = {
-    enable = true
+    enable = true,
+    disable = { "yaml" }
   },
 	highlight = {
 		enable = true
