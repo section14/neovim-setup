@@ -1,309 +1,309 @@
-vim.cmd([[
-" Config vim-plug
-call plug#begin('~/.local/share/nvim/site/autoload')
+--@diagnostic disable: missing-fields
 
-" Neovim 0.5+ stuff, clean up later
-" Plug 'nvim-treesitter/nvim-treesitter', {'tag': '0.9.1', 'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
+-- INFO: introduction
+-- this is a minimal neovim configuration written in lua. this is not meant to
+-- be a distribution, but rather a template for you to build upon and/or a
+-- reference for how to configure neovim using lua in the latest version.
+--
+-- TUTOR:
+-- if you're completely new to neovim and/or vim, consider going through
+-- `:Tutor` inside neovim to get a basic idea of how it works.
+--     if you don't know what this means, type the following:
+--       - <escape key>
+--       - :
+--       - Tutor
+--       - <enter key>
+--
+-- LUA:
+-- some level of familiarity with lua/programming languages are also expected.
+-- if you're new to lua, consider going through the official reference:
+--    https://www.lua.org/manual
+-- or a more friendly tutorial like:
+--    https://learnxinyminutes.com/docs/lua/
+-- you can also check out `:h lua-guide` inside neovim for a neovim-specific
+-- lua guide.
+--
+-- DEPENDENCIES:
+-- this configuration assumes you have the following tools installed on your
+-- system:
+--    `git` - for vim builtin package manager. (see `:h vim.pack`)
+--    `ripgrep` - for fuzzy finding
+--    clipboard tool: xclip/xsel/win32yank - for clipboard sharing between OS and neovim (see `h: clipboard-tool`)
+--    a nerdfont (ensure the terminal running neovim is using it)
+-- run `:checkhealth` inside neovim to see if your system is missing anything.
+--
+-- MINIMAL:
+-- to say that something is 'minimal' you have to define what variable you're
+-- minimizing. this configuration minimizes for lines of code and concepts.
+-- to some, this configuration may have too many plugins. for example, using
+-- mason.nvim to manage lsp servers will be an unnecessary dependency if the
+-- user is already familiar with lsps and is comfortable managing them through
+-- their OS package manager. but to someone that isn't familiar with lsp servers
+-- this approach wouldn't cover everything needed to have the 'minimum' necessary
+-- for lsp + completion + fuzzy finding. to some, fuzzy finding is also a bloated
+-- dependency.
+-- this configuration is only a starting point/reference. it is expected that
+-- the user will change the configuration to suit their needs.
 
-" LSP
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'neovim/nvim-lspconfig'
-" Plug 'cuducos/yaml.nvim'
 
-" auto-complete
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
+-- INFO: options
+-- these change the default neovim behaviours using the 'vim.opt' API.
+-- see `:h vim.opt` for more details.
+-- run `:h '{option_name}'` to see what they do and what values they can take.
+-- for example, `:h 'number'` for `vim.opt.number`.
 
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+-- set <space> as the leader key
+-- must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
-" dependencies
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
+-- enable true color support
+vim.opt.termguicolors = true
 
-" telescope
-Plug 'nvim-telescope/telescope.nvim'
+-- make line numbers default
+vim.opt.number = true
+vim.opt.relativenumber = true
 
-" typescript
-Plug 'mhartington/formatter.nvim'
+-- enable mouse mode, can be useful for resizing splits
+vim.opt.mouse = "a"
 
-"end Neovim 0.5 stuff
+-- sync clipboard between OS and neovim.
+--  remove this option if you want your OS clipboard to remain independent.
+--  see `:help 'clipboard'`
+vim.opt.clipboard = "unnamedplus"
 
-" status bar line
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
-Plug 'nvim-lualine/lualine.nvim'
+-- save undo history
+vim.opt.undofile = true
 
-" indent lines plugin
-Plug 'lukas-reineke/indent-blankline.nvim'
+-- keep signcolumn on by default
+vim.opt.signcolumn = "yes"
 
-" nvim tree
-Plug 'nvim-tree/nvim-tree.lua'
+-- sets how neovim will display certain whitespace characters in the editor.
+--  see `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", }
 
-Plug 'scrooloose/nerdtree'
-Plug 'gregsexton/matchtag'
+-- enable live preview of substitutions
+vim.opt.inccommand = "split"
 
-" .editorconfig plugin
-" Plug 'editorconfig/editorconfig-vim'
+-- show which line your cursor is on
+vim.opt.cursorline = true
 
-" indent plugin
-Plug 'windwp/nvim-autopairs'
+-- set highlight on search, but clear on pressing <Esc> in normal mode
+vim.opt.hlsearch = true
 
-" autotags plugin
-Plug 'windwp/nvim-ts-autotag'
+-- enable break indent
+vim.opt.breakindent = true
 
-" match tags plugin
-Plug 'andymass/vim-matchup'
+-- enable line wrapping
+vim.opt.wrap = true
 
-" themes
-" Plug 'rakr/vim-one'
-" Plug 'tomasiser/vim-code-dark'
-" Plug 'joshdick/onedark.vim'
-Plug 'folke/tokyonight.nvim'
-Plug 'marko-cerovac/material.nvim'
-Plug 'tjdevries/colorbuddy.nvim'
-Plug 'Th3Whit3Wolf/onebuddy'
-Plug 'navarasu/onedark.nvim'
-
-" dev icons
-Plug 'nvim-tree/nvim-web-devicons'
-
-" Initialize plugins
-call plug#end()
-
-let g:NERDTreeStatusline = -1
-]])
-
--- nvim tree config
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- NERDTree config
-
--- shortcuts to telescope commands
-vim.keymap.set('n', 'ff', [[<cmd>Telescope find_files<CR>]], { noremap = true, silent = true })
-vim.keymap.set('n', 'fg', [[<cmd>Telescope live_grep<CR>]], { noremap = true, silent = true })
-vim.keymap.set('n', 'fb', [[<cmd>Telescope buffers<CR>]], { noremap = true, silent = true })
-vim.keymap.set('n', 'fh', [[<cmd>Telescope help_tags<CR>]], { noremap = true, silent = true })
-vim.keymap.set('n', 'fr', [[<cmd>Telescope resume<CR>]], { noremap = true, silent = true })
-
--- compe config
--- vim.keymap.set('i', '<C-Space>', [[compe#complete()]], { noremap = true, silent = true, expr = true })
--- vim.keymap.set('i', '<C-e>', [[compe#close(\'<C-e>\')]], { noremap = true, silent = true, expr = true })
--- vim.keymap.set('i', '<C-f>', [[compe#scroll(\'delta\': +4)]], { noremap = true, silent = true, expr = true })
--- vim.keymap.set('i', '<C-d>', [[compe#scroll(\'delta\': -4)]], { noremap = true, silent = true, expr = true })
-
--- format, go-to definition, hover over description / errors
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
-vim.keymap.set('n', 'D', vim.lsp.buf.hover, { noremap = true, silent = true })
-vim.keymap.set('n', 'F', [[<cmd>:Format<CR>]], { noremap = true, silent = true })
-
--- I don't think you need these anymore
--- syntax on
--- filetype indent plugin on
-
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+-- formatting
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+vim.opt.textwidth = 80
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = {'*.h', '*.c', '*.cpp'},
-  callback = function(ev)
-    vim.opt_local.tabstop = 4
-    vim.opt_local.shiftwidth = 4 
-    vim.opt_local.softtabstop = 4
-    vim.opt_local.expandtab = true
-  end
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+  virtual_text = true, -- show inline diagnostics
 })
 
--- add templ language
-vim.filetype.add({ extension = {templ = "templ"} })
+-- clear search highlights with <Esc>
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-vim.cmd([[
+-- INFO: colorscheme
+vim.cmd.colorscheme("catppuccin")
 
-" shortcuts to show various Telescope screens
-" nnoremap <silent>ff <cmd>Telescope find_files<CR>
-" nnoremap <silent>fg <cmd>Telescope live_grep<CR>
-" nnoremap <silent>fb <cmd>Telescope buffers<CR>
-" nnoremap <silent>fh <cmd>Telescope help_tags<CR>
-" nnoremap <silent>fr <cmd>Telescope resume<CR>
+-- INFO: plugins
+-- we install plugins with neovim's builtin package manager: vim.pack
+-- and then enable/configure them by calling their setup functions.
+--
+-- (see `:h vim.pack` for more details on how it works)
+-- you can press `gx` on any of the plugin urls below to open them in your
+-- browser and check out their documentation and functionality.
+-- alternatively, you can run `:h {plugin-name}` to read their documentation.
+--
+-- plugins are then loaded and configured with a call to `setup` functions
+-- provided by each plugin. this is not a rule of neovim but rather a convention
+-- followed by the community.
+-- these setup calls take a table as an agument and their expected contents can
+-- vary wildly. refer to each plugin's documentation for details.
 
-" compe config
-"" let g:lexima_no_default_rules = v:true
-"" call lexima#set_default_rules()
-" inoremap <silent><expr> <C-Space> compe#complete()
-"" inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
-" inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-" inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-" inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+-- INFO: formatting and syntax highlighting
+vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
 
-" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> D  <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> F  <cmd>:Format<CR>
+-- equivalent to :TSUpdate
+require("nvim-treesitter.install").update("all")
+
+require("nvim-treesitter.config").setup({
+  auto_install = true, -- autoinstall languages that are not installed yet
+})
+
+-- INFO: completion engine
+vim.pack.add({ 'https://github.com/saghen/blink.lib' }) -- I added this
+vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
+
+require("blink.cmp").setup({
+  completion = {
+    documentation = {
+      auto_show = true,
+    },
+  },
+
+  -- default blink keymaps
+  keymap = {
+    ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+    ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+
+    ['<C-y>'] = { 'select_and_accept', 'fallback' },
+    ['<C-e>'] = { 'cancel', 'fallback' },
+    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+
+    ['<Tab>'] = { 'snippet_forward', 'fallback' },
+    ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+
+    ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+    ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+    ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+  },
+
+  fuzzy = {
+    implementation = "lua",
+  },
+})
+
+-- INFO: lsp server installation and configuration
+
+-- lsp servers we want to use and their configuration
+-- see `:h lspconfig-all` for available servers and their settings
+local lsp_servers = {
+  lua_ls = {
+    -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
+    Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
+  },
+  -- clangd = {},
+  -- rust_analyzer = {},
+  -- gopls = {},
+}
+
+vim.pack.add({
+  --"https://github.com/neovim/nvim-lspconfig", -- default configs for lsps
+
+  -- NOTE: if you'd rather install the lsps through your OS package manager you
+  -- can delete the next three mason-related lines and their setup calls below.
+  -- see `:h lsp-quickstart` for more details.
+  "https://github.com/mason-org/mason.nvim",                     -- package manager
+ -- "https://github.com/mason-org/mason-lspconfig.nvim",           -- lspconfig bridge
+  -- "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" -- auto installer
+}, { confirm = false })
+
+require("mason").setup()
 
 
-" tabs
-" set tabstop=4
-" set shiftwidth=4
-" set softtabstop=4
-" set expandtab
+vim.lsp.enable("gopls")
 
-" C, C++
-" au FileType c,cpp,h set tabstop=4
-" au FileType c,cpp,h set shiftwidth=4
-" au FileType c,cpp,h set softtabstop=4
-" au FileType c,cpp,h set expandtab
+--[[
+require("mason-lspconfig").setup({
+  ensure_installed = {"gopls"}
+})
+]]
 
-" Go
-au FileType go set tabstop=4
-au FileType go set shiftwidth=4
-au FileType go set softtabstop=4
-au FileType go set expandtab
-au FileType go nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
+--[[
+vim.lsp.config("gopls", {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  settings = {
+    gopls = {
+      staticcheck = true,
+      gofumpt = true,
+    },
+  },
+})
 
-" Templ
-" au FileType templ nnoremap <silent> F <cmd> lua vim.lsp.buf.format {async = true}<CR>
+vim.lsp.enable("gopls")
+]]
 
-" Javascript / html / css
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set tabstop=4
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set shiftwidth=4
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set softtabstop=4
-au FileType js,javascript,vue,ts,html,css,typescript,typescriptreact set expandtab
+-- require("mason-tool-installer").setup({
+  -- ensure_installed = vim.tbl_keys(lsp_servers),
+-- })
 
-" JS abbreviations
+-- configure each lsp server on the table
+-- to check what clients are attached to the current buffer, use
+-- `:checkhealth vim.lsp`. to view default lsp keybindings, use `:h lsp-defaults`.
 
-" console.log()
-au FileType js,javascript,javascriptreact,vue,ts,typescript,typescriptreact
-	\ :iabbrev <buffer> ccc console.log("")<Left><Left><C-R>=Eatchar('\s')<CR>
+--[[
+for server, config in pairs(lsp_servers) do
+  vim.lsp.config(server, {
+    settings = config,
 
-" console.trace()
-au FileType js,javascript,javascriptreact,vue,ts,typescript,typescriptreact
-	\ :iabbrev <buffer> cct console.trace()<C-R>=Eatchar('\s')<CR>
+    -- only create the keymaps if the server attaches successfully
+    on_attach = function(_, bufnr)
+      vim.keymap.set("n", "grd", vim.lsp.buf.definition,
+        { buffer = bufnr, desc = "vim.lsp.buf.definition()", })
 
-" useEffect shortcut for react
-au FileType js,javascript,javascriptreact,vue,ts,typescript,typescriptreact
-	\ :iabbrev <buffer> uuee useEffect(() => {}, [])<Left><Left><C-R>=Eatchar('\s')<CR>
+      vim.keymap.set("n", "grf", vim.lsp.buf.format,
+        { buffer = bufnr, desc = "vim.lsp.buf.format()", })
+    end,
+  })
+end
+]]
 
-" PHP
-au FileType php set tabstop=4
-au FileType php set shiftwidth=4
-au FileType php set softtabstop=4
-au FileType php set expandtab
+-- INFO: fuzzy finder
+vim.pack.add({
+  "https://github.com/nvim-lua/plenary.nvim",        -- library dependency
+  "https://github.com/nvim-tree/nvim-web-devicons",  -- icons (nerd font)
+  "https://github.com/nvim-telescope/telescope.nvim" -- the fuzzy finder
+}, { confirm = false })
 
-" Lua
-au FileType lua set tabstop=2
-au FileType lua set shiftwidth=2
-au FileType lua set softtabstop=2
-au FileType lua set expandtab
+require("telescope").setup({})
 
-" yaml
-au FileType yml,yaml set tabstop=2
-au FileType yml,yaml set shiftwidth=2
-au FileType yml,yaml set softtabstop=2
-au FileType yml,yaml set expandtab
+local pickers = require("telescope.builtin")
 
-" Fix autoindent for YAML - DO NOT indent a line when commenting a line
-autocmd BufNewFile,BufReadPost *.yaml :set indentkeys-=0#
+-- NEOTree
+vim.pack.add({
+  {
+    src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
+    version = vim.version.range('3')
+  },
+  -- dependencies
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/MunifTanjim/nui.nvim",
+  -- optional, but recommended
+  "https://github.com/nvim-tree/nvim-web-devicons",
+})
 
-" JSON
-au FileType json set tabstop=4
-au FileType json set shiftwidth=4
-au FileType json set softtabstop=4
-au FileType json set expandtab
+vim.keymap.set("n", "<F2>", "<Cmd>Neotree<CR>")
 
-" misc
-set number relativenumber
-set nu rnu
-set showmatch
-set wildmenu
+-- Keybindings --
 
-set laststatus=2
+vim.keymap.set("n", "<leader>sp", pickers.builtin, { desc = "[S]earch Builtin [P]ickers", })
+vim.keymap.set("n", "<leader>sb", pickers.buffers, { desc = "[S]earch [B]uffers", })
+vim.keymap.set("n", "<leader>sf", pickers.find_files, { desc = "[S]earch [F]iles", })
+vim.keymap.set("n", "<leader>sw", pickers.grep_string, { desc = "[S]earch Current [W]ord", })
+vim.keymap.set("n", "<leader>sg", pickers.live_grep, { desc = "[S]earch by [G]rep", })
+vim.keymap.set("n", "<leader>sr", pickers.resume, { desc = "[S]earch [R]esume", })
 
-" colors
-set t_Co=256
-set t_ut=
-" colorscheme onedark
-" let g:airline_theme='deus'
+vim.keymap.set("n", "<leader>sh", pickers.help_tags, { desc = "[S]earch [H]elp", })
+vim.keymap.set("n", "<leader>sm", pickers.man_pages, { desc = "[S]earch [M]anuals", })
 
-" highlight line
-" hi CursorLineNr guifg=#333333
-" set cursorline
-" set cursorlineopt=number
+-- INFO: keybinding helper
+vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
 
-" my mappings
-" nmap <C-P> :FZF<CR>
+require("which-key").setup({
+  spec = {
+    { "<leader>s", group = "[S]earch", icon = { icon = "", color = "green", }, },
+  }
+})
 
-" fix first one
-nmap zj zt 10<C-y>
-nmap <F2> :NERDTree<CR>
-" nmap <F2> :NvimTreeToggle<CR>
-
-" make nerdree add node menu one line 
-" there's a bug where it won't collapse
-let g:NERDTreeMinimalMenu=1
-
-" shortcut for jumping 4 spaces up or down
-nmap J 4j
-nmap K 4k
-
-" show cutoff errors in it's own window
-nnoremap <silent> sh <cmd>lua vim.diagnostic.open_float({scope="line"})<CR>
-
-" I forget what this does
-autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
-
-" Functions
-func Eatchar(pat)
-	let c = nr2char(getchar(0))
-	return (c =~ a:pat) ? '' : c
-endfunc
-]])
-
--- Order matters (or does it?)
--- vim.g.material_style = "darker"
-
--- temp fix for treesitter highlighting 
--- require('_treefix')
-require('_nvimtree')
-
-require('_util')
--- require('galaxyline/_space')
-require('_treesitter')
-require('_telescope')
-require('_compe-config')
-require('_lualine')
-
--- LSP
-require('_lsp-mason') -- must come first!
-require('_lsp-golang')
-require('_lsp-templ')
-require('_lsp-tsserver')
-require('_lsp-html-css')
-require('_lsp-htmx')
-require('_lsp-tailwind')
-require('_lsp-cpp')
-require('_lsp-php')
--- require('_lsp-yaml')
-
--- Look and feel
-require('_colors')
-require('_dev-icons')
-
-vim.cmd.colorscheme("onedark")
-
-vim.cmd([[
-
-highlight DiagnosticError ctermfg=1 guibg=#403037 guifg=#e06c75
-highlight DiagnosticUnderlineError cterm=underline gui=underline guisp=#713f47
-
-highlight MatchWord ctermfg=yellow guifg=#60D5EF guibg=#2A3942 cterm=underline gui=underline
-highlight MatchParen ctermfg=yellow guifg=#F5945C guibg=#343032
-]])
+-- uncomment to enable automatic plugin updates
+-- vim.pack.update()
