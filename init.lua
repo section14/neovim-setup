@@ -109,7 +109,6 @@ vim.opt.textwidth = 100
 -- My formating --------------------------------
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set("n", "D", vim.lsp.buf.hover, { noremap = true, silent = true })
-vim.keymap.set("n", "F", [[<cmd>:Format<CR>]], { noremap = true, silent = true })
 
 -- extended up and down moves
 vim.keymap.set("n", "J", "4j", { silent = true })
@@ -162,6 +161,7 @@ require('onedark').setup {
 require('onedark').load()
 
 vim.cmd.colorscheme("onedark")
+--vim.cmd.colorscheme("catppuccin-nvim")
 
 -- INFO: plugins
 -- we install plugins with neovim's builtin package manager: vim.pack
@@ -226,16 +226,14 @@ vim.api.nvim_create_autocmd('FileType', {
     "go",
     "gomod",
     "gosum",
-    "h",
-    "hpp",
     "html",
-    "js",
-    "jsx",
+    "javascript",
+    "javascriptreact",
     "lua",
     "php",
     "sql",
-    "ts",
-    "tsx",
+    "typescript",
+    "typescriptreact",
     "yaml",
     "yml",
   },
@@ -309,36 +307,22 @@ vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
 vim.lsp.enable("vtsls")
 
---[[
-require("mason-lspconfig").setup({
-  ensure_installed = {"gopls"}
+-- Formatter (used for js / ts for now) --------------------------
+vim.pack.add({"https://github.com/stevearc/conform.nvim"})
+
+require("conform").setup({
+  formatters_by_ft = {
+    -- Conform will run the first available formatter
+    css = { "prettierd", "prettier", stop_after_first = true },
+    html = { "prettierd", "prettier", stop_after_first = true },
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+    typescript = { "prettierd", "prettier", stop_after_first = true },
+    javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+    typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+  },
 })
-]]
 
--- require("mason-tool-installer").setup({
-  -- ensure_installed = vim.tbl_keys(lsp_servers),
--- })
-
--- configure each lsp server on the table
--- to check what clients are attached to the current buffer, use
--- `:checkhealth vim.lsp`. to view default lsp keybindings, use `:h lsp-defaults`.
-
---[[
-for server, config in pairs(lsp_servers) do
-  vim.lsp.config(server, {
-    settings = config,
-
-    -- only create the keymaps if the server attaches successfully
-    on_attach = function(_, bufnr)
-      vim.keymap.set("n", "grd", vim.lsp.buf.definition,
-        { buffer = bufnr, desc = "vim.lsp.buf.definition()", })
-
-      vim.keymap.set("n", "grf", vim.lsp.buf.format,
-        { buffer = bufnr, desc = "vim.lsp.buf.format()", })
-    end,
-  })
-end
-]]
+vim.keymap.set("n", "F", function() require("conform").format() end, { noremap = true })
 
 -- INFO: fuzzy finder
 vim.pack.add({

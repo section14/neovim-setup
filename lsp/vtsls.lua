@@ -8,5 +8,25 @@ return {
         maxInlayHintLength = 30, -- Cleans up messy TypeScript types on-screen
       },
     },
+    javascript = {
+      format = {
+        enable = false
+      }
+    },
+    javascriptreact = {
+      format = {
+        enable = false
+      }
+    },
+    typescript = {
+      format = {
+        enable = false
+      }
+    },
+    typescriptreact = {
+      format = {
+        enable = false
+      }
+    },
   },
 }
