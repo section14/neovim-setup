@@ -70,7 +70,7 @@ vim.opt.mouse = "a"
 -- sync clipboard between OS and neovim.
 --  remove this option if you want your OS clipboard to remain independent.
 --  see `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 
 -- save undo history
 vim.opt.undofile = true
@@ -81,8 +81,9 @@ vim.opt.signcolumn = "yes"
 -- sets how neovim will display certain whitespace characters in the editor.
 --  see `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", }
+--vim.opt.list = true
+--vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", }
+--vim.opt.listchars = { tab = "» ", nbsp = "␣", }
 
 -- enable live preview of substitutions
 vim.opt.inccommand = "split"
@@ -100,10 +101,41 @@ vim.opt.breakindent = true
 vim.opt.wrap = true
 
 -- formatting
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-vim.opt.textwidth = 80
+vim.opt.textwidth = 100
+
+-- My formating --------------------------------
+vim.keymap.set("n", "D", vim.lsp.buf.hover, { noremap = true, silent = true })
+vim.keymap.set("n", "F", [[<cmd>:Format<CR>]], { noremap = true, silent = true })
+
+-- extended up and down moves
+vim.keymap.set("n", "J", "4j", { silent = true })
+vim.keymap.set("n", "K", "4k", { silent = true })
+
+-- disable auto comment on new line
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = "*",
+  callback = function()
+      vim.opt.formatoptions:remove { "c", "r", "o" }
+      vim.opt_local.formatoptions:remove { "c", "r", "o" }
+  end
+})
+
+-- show cutoff errors in it's own window
+-- nnoremap <silent> sh <cmd>lua vim.diagnostic.open_float({scope="line"})<CR>
+vim.keymap.set("n", "sh", function() vim.diagnostic.open_float({scope="line"}) end, { noremap = true, silent = true })
+
+-- Go formatting
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = "go",
+  callback = function()
+    vim.keymap.set("n", "F", function() vim.lsp.buf.format({ async = true }) end, { noremap = true, silent = true })
+  end,
+})
+
+-- END My formating ----------------------------
 
 vim.diagnostic.config({
   signs = {
@@ -121,7 +153,16 @@ vim.diagnostic.config({
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- INFO: colorscheme
-vim.cmd.colorscheme("catppuccin")
+vim.pack.add({"https://github.com/navarasu/onedark.nvim"}, {confirm = false})
+vim.pack.add { { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } }
+
+--[[require('onedark').setup {
+  style = 'dark'
+}
+require('onedark').load()
+]]
+
+vim.cmd.colorscheme("catppuccin-nvim")
 
 -- INFO: plugins
 -- we install plugins with neovim's builtin package manager: vim.pack
@@ -138,14 +179,68 @@ vim.cmd.colorscheme("catppuccin")
 -- these setup calls take a table as an agument and their expected contents can
 -- vary wildly. refer to each plugin's documentation for details.
 
--- INFO: formatting and syntax highlighting
-vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
+-- Treesitter --------------------------
+vim.pack.add({ {src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main"} }, { confirm = false })
+
+local treesitter = require("nvim-treesitter")
+
+treesitter.install({
+  "c",
+  "cpp",
+  "css",
+  "go",
+  "lua",
+  "tsx",
+  "javascript",
+  "typescript",
+  "vimdoc",
+  "vim",
+  "json",
+  "markdown",
+  "html",
+  "http",
+  "php",
+  "regex",
+  "markdown_inline",
+  "yaml",
+  "ini",
+  "gomod",
+  "gosum",
+  "gowork",
+  "sql",
+})
 
 -- equivalent to :TSUpdate
 require("nvim-treesitter.install").update("all")
 
 require("nvim-treesitter.config").setup({
-  auto_install = true, -- autoinstall languages that are not installed yet
+  ensure_installed = {"c", "cpp", "lua", "javascript", "typescript", "go", "php", "html", "css", "vim", "vimdoc", "markdown"},
+  highlight = { enable = true },
+  indent = { enable = true },
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {
+    "c",
+    "cpp",
+    "css",
+    "go",
+    "gomod",
+    "gosum",
+    "h",
+    "hpp",
+    "html",
+    "js",
+    "jsx",
+    "lua",
+    "php",
+    "sql",
+    "ts",
+    "tsx",
+    "yaml",
+    "yml",
+  },
+  callback = function() vim.treesitter.start() end,
 })
 
 -- INFO: completion engine
@@ -161,6 +256,7 @@ require("blink.cmp").setup({
 
   -- default blink keymaps
   keymap = {
+    ['<CR>'] = { 'accept', 'fallback' },
     ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
     ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
 
@@ -209,28 +305,13 @@ vim.pack.add({
 
 require("mason").setup()
 
-
+-- enable LSP's
 vim.lsp.enable("gopls")
 
 --[[
 require("mason-lspconfig").setup({
   ensure_installed = {"gopls"}
 })
-]]
-
---[[
-vim.lsp.config("gopls", {
-  cmd = { 'gopls' },
-  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-  settings = {
-    gopls = {
-      staticcheck = true,
-      gofumpt = true,
-    },
-  },
-})
-
-vim.lsp.enable("gopls")
 ]]
 
 -- require("mason-tool-installer").setup({
@@ -284,17 +365,13 @@ vim.pack.add({
 
 vim.keymap.set("n", "<F2>", "<Cmd>Neotree<CR>")
 
--- Keybindings --
-
-vim.keymap.set("n", "<leader>sp", pickers.builtin, { desc = "[S]earch Builtin [P]ickers", })
-vim.keymap.set("n", "<leader>sb", pickers.buffers, { desc = "[S]earch [B]uffers", })
-vim.keymap.set("n", "<leader>sf", pickers.find_files, { desc = "[S]earch [F]iles", })
-vim.keymap.set("n", "<leader>sw", pickers.grep_string, { desc = "[S]earch Current [W]ord", })
-vim.keymap.set("n", "<leader>sg", pickers.live_grep, { desc = "[S]earch by [G]rep", })
-vim.keymap.set("n", "<leader>sr", pickers.resume, { desc = "[S]earch [R]esume", })
-
-vim.keymap.set("n", "<leader>sh", pickers.help_tags, { desc = "[S]earch [H]elp", })
-vim.keymap.set("n", "<leader>sm", pickers.man_pages, { desc = "[S]earch [M]anuals", })
+-- Telescope Keybindings --
+-- other options available: builtin, grep_string, help_tags, man_pages
+vim.keymap.set('n', 'ff', pickers.find_files, { noremap = true, silent = true })
+vim.keymap.set('n', 'fg', pickers.live_grep, { noremap = true, silent = true })
+vim.keymap.set('n', 'fb', pickers.buffers, { noremap = true, silent = true })
+vim.keymap.set('n', 'fh', pickers.help_tags, { noremap = true, silent = true })
+vim.keymap.set('n', 'fr', pickers.resume, { noremap = true, silent = true })
 
 -- INFO: keybinding helper
 vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
