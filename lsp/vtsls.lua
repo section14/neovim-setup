@@ -28,5 +28,10 @@ return {
         enable = false
       }
     },
+    json = {
+      format = {
+        enable = false
+      }
+    },
   },
 }

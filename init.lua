@@ -319,12 +319,13 @@ require("conform").setup({
     typescript = { "prettierd", "prettier", stop_after_first = true },
     javascriptreact = { "prettierd", "prettier", stop_after_first = true },
     typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+    json = { "prettierd", "prettier", stop_after_first = true },
   },
 })
 
 vim.keymap.set("n", "F", function() require("conform").format() end, { noremap = true })
 
--- INFO: fuzzy finder
+-- INFO: fuzzy finder ----------------------------
 vim.pack.add({
   "https://github.com/nvim-lua/plenary.nvim",        -- library dependency
   "https://github.com/nvim-tree/nvim-web-devicons",  -- icons (nerd font)
@@ -335,7 +336,15 @@ require("telescope").setup({})
 
 local pickers = require("telescope.builtin")
 
--- NEOTree
+-- Telescope Keybindings --
+-- other options available: builtin, grep_string, help_tags, man_pages
+vim.keymap.set('n', 'ff', pickers.find_files, { noremap = true, silent = true })
+vim.keymap.set('n', 'fg', pickers.live_grep, { noremap = true, silent = true })
+vim.keymap.set('n', 'fb', pickers.buffers, { noremap = true, silent = true })
+vim.keymap.set('n', 'fh', pickers.help_tags, { noremap = true, silent = true })
+vim.keymap.set('n', 'fr', pickers.resume, { noremap = true, silent = true })
+
+-- NEOTree ----------------------------------------
 vim.pack.add({
   {
     src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
@@ -348,15 +357,20 @@ vim.pack.add({
   "https://github.com/nvim-tree/nvim-web-devicons",
 })
 
-vim.keymap.set("n", "<F2>", "<Cmd>Neotree<CR>")
+-- Lualine ----------------------------------------
+vim.pack.add({
+    'https://github.com/nvim-tree/nvim-web-devicons',
+    'https://github.com/nvim-lualine/lualine.nvim'
+})
 
--- Telescope Keybindings --
--- other options available: builtin, grep_string, help_tags, man_pages
-vim.keymap.set('n', 'ff', pickers.find_files, { noremap = true, silent = true })
-vim.keymap.set('n', 'fg', pickers.live_grep, { noremap = true, silent = true })
-vim.keymap.set('n', 'fb', pickers.buffers, { noremap = true, silent = true })
-vim.keymap.set('n', 'fh', pickers.help_tags, { noremap = true, silent = true })
-vim.keymap.set('n', 'fr', pickers.resume, { noremap = true, silent = true })
+require("_lualine")
+
+-- Indent highlighting ----------------------------
+vim.pack.add({"https://github.com/lukas-reineke/indent-blankline.nvim"})
+require("_blankline")
+
+-- do you need this???
+vim.keymap.set("n", "<F2>", "<Cmd>Neotree<CR>")
 
 -- INFO: keybinding helper
 vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
