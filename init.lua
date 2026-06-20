@@ -107,6 +107,7 @@ vim.opt.expandtab = true
 vim.opt.textwidth = 100
 
 -- My formating --------------------------------
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set("n", "D", vim.lsp.buf.hover, { noremap = true, silent = true })
 vim.keymap.set("n", "F", [[<cmd>:Format<CR>]], { noremap = true, silent = true })
 
@@ -124,7 +125,6 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- show cutoff errors in it's own window
--- nnoremap <silent> sh <cmd>lua vim.diagnostic.open_float({scope="line"})<CR>
 vim.keymap.set("n", "sh", function() vim.diagnostic.open_float({scope="line"}) end, { noremap = true, silent = true })
 
 -- Go formatting
@@ -156,13 +156,12 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.pack.add({"https://github.com/navarasu/onedark.nvim"}, {confirm = false})
 vim.pack.add { { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } }
 
---[[require('onedark').setup {
+require('onedark').setup {
   style = 'dark'
 }
 require('onedark').load()
-]]
 
-vim.cmd.colorscheme("catppuccin-nvim")
+vim.cmd.colorscheme("onedark")
 
 -- INFO: plugins
 -- we install plugins with neovim's builtin package manager: vim.pack
@@ -214,7 +213,7 @@ treesitter.install({
 require("nvim-treesitter.install").update("all")
 
 require("nvim-treesitter.config").setup({
-  ensure_installed = {"c", "cpp", "lua", "javascript", "typescript", "go", "php", "html", "css", "vim", "vimdoc", "markdown"},
+  ensure_installed = {"c", "cpp", "lua", "javascript", "typescript", "tsx", "go", "php", "html", "css", "vim", "vimdoc", "markdown"},
   highlight = { enable = true },
   indent = { enable = true },
 })
@@ -305,8 +304,10 @@ vim.pack.add({
 
 require("mason").setup()
 
--- enable LSP's
+-- enable LSP's -------------------------------------------------
+vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
+vim.lsp.enable("vtsls")
 
 --[[
 require("mason-lspconfig").setup({
