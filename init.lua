@@ -332,7 +332,18 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope.nvim" -- the fuzzy finder
 }, { confirm = false })
 
-require("telescope").setup({})
+require("telescope").setup({
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-S-d>"] = require('telescope.actions').delete_buffer
+      }
+    },
+    file_ignore_patterns = {
+      "%.lock"
+    }
+  }
+})
 
 local pickers = require("telescope.builtin")
 
@@ -368,6 +379,33 @@ require("_lualine")
 -- Indent highlighting ----------------------------
 vim.pack.add({"https://github.com/lukas-reineke/indent-blankline.nvim"})
 require("_blankline")
+
+-- Auto pairs -------------------------------------
+vim.pack.add({"https://github.com/windwp/nvim-autopairs"})
+require('nvim-autopairs').setup({
+  -- disable_filetype = { "TelescopePrompt" , "vim" },
+  map_cr = true, --  map <CR> on insert mode
+})
+
+-- Auto tags --------------------------------------
+vim.pack.add({"https://github.com/windwp/nvim-ts-autotag"})
+require('nvim-ts-autotag').setup({
+  opts = {
+    -- Defaults
+    enable_close = true, -- Auto close tags
+    enable_rename = true, -- Auto rename pairs of tags
+    enable_close_on_slash = false -- Auto close on trailing </
+  },
+
+  -- Also override individual filetype configs, these take priority.
+  -- Empty by default, useful if one of the "opts" global settings
+  -- doesn't work well in a specific filetype
+  -- per_filetype = {
+    -- ["html"] = {
+      -- enable_close = false
+    -- }
+  -- }
+})
 
 -- do you need this???
 vim.keymap.set("n", "<F2>", "<Cmd>Neotree<CR>")
