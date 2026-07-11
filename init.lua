@@ -134,6 +134,30 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Js funcs
+
+vim.cmd([[
+
+func Eatchar(pat)
+	let c = nr2char(getchar(0))
+	return (c =~ a:pat) ? '' : c
+endfunc
+
+" console.log()
+au FileType js,javascript,javascriptreact,vue,ts,typescript,typescriptreact
+	\ :iabbrev <buffer> ccc console.log("")<Left><Left><C-R>=Eatchar('\s')<CR>
+
+" console.trace()
+au FileType js,javascript,javascriptreact,vue,ts,typescript,typescriptreact
+	\ :iabbrev <buffer> cct console.trace()<C-R>=Eatchar('\s')<CR>
+
+" useEffect shortcut for react
+au FileType js,javascript,javascriptreact,vue,ts,typescript,typescriptreact
+	\ :iabbrev <buffer> uuee useEffect(() => {}, [])<Left><Left><C-R>=Eatchar('\s')<CR>
+
+
+]])
+
 -- END My formating ----------------------------
 
 vim.diagnostic.config({
