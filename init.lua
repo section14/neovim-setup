@@ -134,6 +134,26 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Lua formatting
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = "lua",
+  callback = function()
+    vim.opt.tabstop = 2
+    vim.opt.shiftwidth = 2
+    vim.opt.expandtab = true
+  end,
+})
+
+-- YAML formatting
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {"yaml", "yml"},
+  callback = function()
+    vim.opt.tabstop = 2
+    vim.opt.shiftwidth = 2
+    vim.opt.expandtab = true
+  end,
+})
+
 -- Js funcs
 
 vim.cmd([[
